@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource/press-start-2p";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -41,6 +42,107 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* Retro 8-bit color scheme */
+:root {
+  --retro-bg-dark: #1a1a2e;
+  --retro-bg-panel: #16213e;
+  --retro-primary: #0f3460;
+  --retro-accent: #e94560;
+  --retro-success: #53a653;
+  --retro-text-main: #e9ecef;
+  --retro-text-dim: #adb5bd;
+  --retro-border: #4a5568;
+}
+
+/* 8-bit font definitions */
+.font-pixel {
+  font-family: "Press Start 2P", cursive;
+}
+
+.font-terminal {
+  font-family: "Courier New", monospace;
+}
+
+/* 8-bit animations */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-2px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes pixelPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Utility classes for 8-bit effects */
+.typing-effect {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+.blink-cursor {
+  animation: blink 1s infinite;
+}
+
+.shake-error {
+  animation: shake 0.5s;
+}
+
+/* Terminal styling */
+.terminal-text {
+  font-family: "Courier New", monospace;
+  color: #4ade80;
+  background-color: black;
+  text-shadow: 0 0 5px currentColor;
+}
+
+/* Retro success styling */
+.retro-success {
+  color: #53a653;
+  text-shadow: 0 0 8px #53a653;
 }
 
 :root {
