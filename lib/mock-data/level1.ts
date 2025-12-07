@@ -90,6 +90,11 @@ In der Mitte der Halle steht eine kleine, leuchtende Fee.`,
                     command: ["schaue", "schau", "guck", "untersuche"],
                     nextNodeId: "L1_OVERWHELMED",
                     response: "Du schaust dich in der Halle um..."
+                },
+                {
+                    command: ["zurück", "halle", "schaue halle"],
+                    nextNodeId: "L1_HALL_HUB",
+                    response: "Du gehst in die Mitte der Halle..."
                 }
             ]
         },
@@ -180,29 +185,107 @@ SCHRITT FÜR SCHRITT!"`,
                     response: "Du schaust dich um..."
                 },
                 {
-                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern"],
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern", "schwerter"],
                     nextNodeId: "L1_SWORDS_START",
                     response: "✅ Gute Wahl! Die Schwerter sind ein guter Start!",
                     effects: [
                         { type: "addOP", amount: 5 },
                         { type: "setFlag", flag: "started_with_swords", value: true }
+                    ],
+                    conditions: [
+                        { type: "not", flag: "swords_complete" }
                     ]
                 },
                 {
-                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen", "rüstungen"],
                     nextNodeId: "L1_ARMOR_START",
                     response: "💪 Mutig! Rüstungen sind schwer, aber machbar!",
                     effects: [
                         { type: "setFlag", flag: "started_with_armor", value: true }
+                    ],
+                    conditions: [
+                        { type: "not", flag: "armor_complete" }
                     ]
                 },
                 {
-                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen", "fahnen"],
                     nextNodeId: "L1_FLAGS_START",
                     response: "🚩 Okay! Fahnen müssen sortiert werden!",
                     effects: [
                         { type: "setFlag", flag: "started_with_flags", value: true }
+                    ],
+                    conditions: [
+                        { type: "not", flag: "flags_complete" }
                     ]
+                },
+                {
+                    command: ["zurück", "halle", "schaue halle"],
+                    nextNodeId: "L1_HALL_HUB",
+                    response: "Du gehst zurück in die Mitte der Halle..."
+                }
+            ]
+        },
+
+        // L1_HALL_HUB - Zentraler Hub für Task-Wechsel
+        L1_HALL_HUB: {
+            id: "L1_HALL_HUB",
+            type: "story",
+            text: `Du stehst in der Eingangshalle und schaust dich um.
+
+Was möchtest du als Nächstes tun?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+VERFÜGBARE AUFGABEN:
+⚔️ Schwerter aufräumen
+🛡️ Rüstungen aufstellen
+🚩 Fahnen sortieren
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🧚 "Du kannst jederzeit zwischen den Aufgaben wechseln!
+Wähle einfach, was du als Nächstes tun möchtest.
+
+Tipp: Verwende 'nimm schwert', 'richte rüstung auf' oder 'sortiere fahnen' um eine Aufgabe zu beginnen.
+Oder tippe 'zurück' um hierher zurückzukehren, wenn du eine Aufgabe abgeschlossen hast."`,
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "helpful" },
+            transitions: [
+                {
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern", "schwerter"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: "Zu den Schwertern!",
+                    conditions: [
+                        { type: "not", flag: "swords_complete" }
+                    ]
+                },
+                {
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen", "rüstungen"],
+                    nextNodeId: "L1_ARMOR_START",
+                    response: "Zu den Rüstungen!",
+                    conditions: [
+                        { type: "not", flag: "armor_complete" }
+                    ]
+                },
+                {
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen", "fahnen"],
+                    nextNodeId: "L1_FLAGS_START",
+                    response: "Zu den Fahnen!",
+                    conditions: [
+                        { type: "not", flag: "flags_complete" }
+                    ]
+                },
+                {
+                    command: ["schaue", "schau", "guck"],
+                    nextNodeId: "L1_CHECK_COMPLETE",
+                    response: "Du schaust dich um...",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "hasFlag", flag: "armor_complete", value: true },
+                        { type: "hasFlag", flag: "flags_complete", value: true }
+                    ]
+                },
+                {
+                    command: ["sprich fee", "sprich", "rede fee"],
+                    nextNodeId: "L1_FEE_EXPLAINS",
+                    response: "Die Fee erklärt dir nochmal die Technik..."
                 }
             ]
         },
@@ -522,22 +605,25 @@ Was machst du als Nächstes?`,
             ],
             transitions: [
                 {
-                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen", "rüstungen"],
                     nextNodeId: "L1_ARMOR_START",
                     response: "Jetzt die Rüstungen!",
                     conditions: [
-                        { type: "hasFlag", flag: "swords_complete", value: true },
                         { type: "not", flag: "armor_complete" }
                     ]
                 },
                 {
-                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen", "fahnen"],
                     nextNodeId: "L1_FLAGS_START",
                     response: "Jetzt die Fahnen!",
                     conditions: [
-                        { type: "hasFlag", flag: "swords_complete", value: true },
                         { type: "not", flag: "flags_complete" }
                     ]
+                },
+                {
+                    command: ["zurück", "halle", "schaue", "schau"],
+                    nextNodeId: "L1_HALL_HUB",
+                    response: "Du gehst zurück in die Mitte der Halle..."
                 }
             ]
         },
@@ -677,13 +763,25 @@ FORTSCHRITT IN DER HALLE:
             ],
             transitions: [
                 {
-                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen", "fahnen"],
                     nextNodeId: "L1_FLAGS_START",
                     response: "Jetzt die Fahnen!",
                     conditions: [
-                        { type: "hasFlag", flag: "armor_complete", value: true },
                         { type: "not", flag: "flags_complete" }
                     ]
+                },
+                {
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern", "schwerter"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: "Zurück zu den Schwertern!",
+                    conditions: [
+                        { type: "not", flag: "swords_complete" }
+                    ]
+                },
+                {
+                    command: ["zurück", "halle", "schaue", "schau"],
+                    nextNodeId: "L1_HALL_HUB",
+                    response: "Du gehst zurück in die Mitte der Halle..."
                 },
                 {
                     command: ["schaue", "schau"],
@@ -829,6 +927,27 @@ FORTSCHRITT IN DER HALLE:
                 { type: "updateTask", taskId: "t3", status: "completed" }
             ],
             transitions: [
+                {
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern", "schwerter"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: "Zurück zu den Schwertern!",
+                    conditions: [
+                        { type: "not", flag: "swords_complete" }
+                    ]
+                },
+                {
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen", "rüstungen"],
+                    nextNodeId: "L1_ARMOR_START",
+                    response: "Zurück zu den Rüstungen!",
+                    conditions: [
+                        { type: "not", flag: "armor_complete" }
+                    ]
+                },
+                {
+                    command: ["zurück", "halle", "schaue", "schau"],
+                    nextNodeId: "L1_HALL_HUB",
+                    response: "Du gehst zurück in die Mitte der Halle..."
+                },
                 {
                     command: ["schaue", "schau"],
                     nextNodeId: "L1_ALL_TASKS_DONE",

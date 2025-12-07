@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface DialogueBoxProps {
     speaker?: string;
@@ -21,6 +21,7 @@ export default function DialogueBox({
 }: DialogueBoxProps) {
     const [displayedText, setDisplayedText] = useState("");
     const [isTyping, setIsTyping] = useState(true);
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         setDisplayedText("");
@@ -39,19 +40,43 @@ export default function DialogueBox({
         // Clear potentially stale text
         setDisplayedText("");
 
-        const timer = setInterval(() => {
+        // Clear any existing timer
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+        }
+
+        timerRef.current = setInterval(() => {
             currentIndex++;
             if (currentIndex <= textToDisplay.length) {
                 setDisplayedText(textToDisplay.slice(0, currentIndex));
             } else {
                 setIsTyping(false);
-                clearInterval(timer);
+                if (timerRef.current) {
+                    clearInterval(timerRef.current);
+                    timerRef.current = null;
+                }
                 onComplete?.();
             }
         }, typingSpeed);
 
-        return () => clearInterval(timer);
+        return () => {
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+                timerRef.current = null;
+            }
+        };
     }, [text, typingSpeed, onComplete]);
+
+    const handleFastForward = () => {
+        if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+        }
+        const textToDisplay = (text ?? "").trim();
+        setDisplayedText(textToDisplay);
+        setIsTyping(false);
+        onComplete?.();
+    };
 
     const getMoodColor = (mood: string | undefined) => {
         switch (mood) {
@@ -101,7 +126,7 @@ export default function DialogueBox({
         <div className="bg-[var(--retro-bg-panel)] border-4 border-[var(--retro-border)] shadow-[4px_4px_0_0_var(--retro-border),8px_8px_0_0_rgba(0,0,0,0.3)] p-4 mb-4">
             <div className="flex items-start space-x-3">
                 {/* Character portrait placeholder */}
-                <div className="flex-shrink-0 w-16 h-16 bg-[var(--retro-bg-dark)] border-2 border-[var(--retro-border)] flex items-center justify-center text-2xl overflow-hidden">
+                <div className="flex-shrink-0 w-32 h-32 bg-[var(--retro-bg-dark)] border-2 border-[var(--retro-border)] flex items-center justify-center text-4xl overflow-hidden">
                     {image ? (
                         <img
                             src={image}
@@ -114,16 +139,27 @@ export default function DialogueBox({
                 </div>
 
                 {/* Dialogue content */}
-                <div className="flex-1">
+                <div className="flex-1 flex flex-col">
                     {speaker && (
                         <div className={`font-pixel text-xs mb-2 ${getMoodColor(mood)}`}>
                             {speaker.toUpperCase()}
                         </div>
                     )}
-                    <div className="font-mono text-white text-sm leading-relaxed">
-                        {displayedText || (text ?? "")}
+                    <div className="flex items-start gap-2">
+                        <div className="font-mono text-white text-sm leading-relaxed flex-1">
+                            {displayedText || (text ?? "")}
+                            {isTyping && (
+                                <span className="blink-cursor text-white">_</span>
+                            )}
+                        </div>
                         {isTyping && (
-                            <span className="blink-cursor text-white">_</span>
+                            <button
+                                onClick={handleFastForward}
+                                className="flex-shrink-0 px-2 py-1 bg-[var(--retro-bg-dark)] border-2 border-[var(--retro-border)] text-white font-pixel text-xs hover:bg-[var(--retro-border)] transition-colors active:translate-x-0.5 active:translate-y-0.5 active:shadow-none shadow-[2px_2px_0_0_var(--retro-border)]"
+                                aria-label="Text überspringen"
+                            >
+                                ⏩
+                            </button>
                         )}
                     </div>
                 </div>
