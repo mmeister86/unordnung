@@ -1,30 +1,32 @@
 import { LevelData } from "@/types/game";
 
 export const LEVEL_1_DATA: LevelData = {
-  id: 1,
-  title: "Die Eingangshalle",
-  description: "Lerne, große Aufgaben in kleine Schritte zu zerlegen.",
-  tasks: [
-    { id: "t1", description: "Schwerter aufräumen (0/3)", status: "pending" },
-    { id: "t2", description: "Rüstungen aufstellen (0/3)", status: "pending" },
-    { id: "t3", description: "Fahnen sortieren", status: "pending" },
-  ],
-  items: [
-    {
-      id: "sword",
-      name: "Schwert",
-      description: "Ein schweres Ritterschwert.",
-    },
-    { id: "broom", name: "Besen", description: "Ein alter Besen." },
-    { id: "armor", name: "Rüstung", description: "Eine verbeulte Ritterrüstung." },
-    { id: "flag", name: "Fahne", description: "Eine verstaubte Burghof-Fahne." },
-  ],
-  nodes: {
-    // L1_INTRO - Level-Einführung
-    start: {
-      id: "start",
-      type: "story",
-      text: `Es war einmal in einem friedlichen Königreich...
+    id: 1,
+    title: "Die Eingangshalle",
+    backgroundImage: "/images/schloss.jpeg",
+    description: "Lerne, große Aufgaben in kleine Schritte zu zerlegen.",
+    tasks: [
+        { id: "t1", description: "Schwerter aufräumen (0/3)", status: "pending" },
+        { id: "t2", description: "Rüstungen aufstellen (0/3)", status: "pending" },
+        { id: "t3", description: "Fahnen sortieren", status: "pending" },
+    ],
+    items: [
+        {
+            id: "sword",
+            name: "Schwert",
+            description: "Ein schweres Ritterschwert.",
+        },
+        { id: "broom", name: "Besen", description: "Ein alter Besen." },
+        { id: "armor", name: "Rüstung", description: "Eine verbeulte Ritterrüstung." },
+        { id: "flag", name: "Fahne", description: "Eine verstaubte Burghof-Fahne." },
+    ],
+    nodes: {
+        // L1_INTRO - Level-Einführung
+        start: {
+            id: "start",
+            type: "story",
+            npc: { name: "Erzähler", image: "/images/erzähler.jpeg", mood: "neutral" },
+            text: `Es war einmal in einem friedlichen Königreich...
 
 Prinzessin Ordelia herrschte über das Land der Struktur.
 Alles hatte seinen Platz, jede Aufgabe ihre Zeit.
@@ -40,25 +42,30 @@ Aber wie besiegst du das Chaos?
 Indem du lernst, große Aufgaben in kleine Schritte zu zerlegen!
 
 🚪 Du stehst vor der Eingangshalle des Schlosses...`,
-      transitions: [
-        {
-          command: ["betrete halle", "gehe hinein", "öffne tür"],
-          nextNodeId: "L1_ENTER_HALL",
-          response: "Du öffnest die schweren Türen..."
+            transitions: [
+                {
+                    command: ["betrete halle", "gehe hinein", "öffne tür"],
+                    nextNodeId: "L1_ENTER_HALL",
+                    response: "Du öffnest die schweren Türen..."
+                },
+                {
+                    command: ["schaue", "schau", "guck"],
+                    nextNodeId: "L1_ENTER_HALL",
+                    response: "Du schaust durch die Tür..."
+                },
+                {
+                    command: ["hilfe", "help"],
+                    nextNodeId: "start",
+                    response: "Tippe 'betrete halle' oder 'öffne tür' um das Spiel zu starten."
+                }
+            ]
         },
-        {
-          command: ["schaue", "schau", "guck"],
-          nextNodeId: "L1_ENTER_HALL",
-          response: "Du schaust durch die Tür..."
-        }
-      ]
-    },
 
-    // L1_ENTER_HALL - Betreten der Halle
-    L1_ENTER_HALL: {
-      id: "L1_ENTER_HALL",
-      type: "story",
-      text: `Du betrittst die große Eingangshalle.
+        // L1_ENTER_HALL - Betreten der Halle
+        L1_ENTER_HALL: {
+            id: "L1_ENTER_HALL",
+            type: "story",
+            text: `Du betrittst die große Eingangshalle.
 
 Eine prächtige Halle mit hohen Säulen und Marmorboden.
 Normalerweise glänzt hier alles in perfekter Ordnung.
@@ -72,26 +79,26 @@ Doch jetzt...
 🧹 Der BODEN ist voller Staub
 
 In der Mitte der Halle steht eine kleine, leuchtende Fee.`,
-      npc: { name: "Fee Struktura", mood: "concerned" },
-      transitions: [
-        {
-          command: ["sprich fee", "sprich", "rede fee"],
-          nextNodeId: "L1_FEE_GREETING",
-          response: "Du gehst zur Fee..."
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "concerned" },
+            transitions: [
+                {
+                    command: ["sprich fee", "sprich", "rede fee"],
+                    nextNodeId: "L1_FEE_GREETING",
+                    response: "Du gehst zur Fee..."
+                },
+                {
+                    command: ["schaue", "schau", "guck", "untersuche"],
+                    nextNodeId: "L1_OVERWHELMED",
+                    response: "Du schaust dich in der Halle um..."
+                }
+            ]
         },
-        {
-          command: ["schaue", "schau", "guck", "untersuche"],
-          nextNodeId: "L1_OVERWHELMED",
-          response: "Du schaust dich in der Halle um..."
-        }
-      ]
-    },
 
-    // L1_FEE_GREETING - Tutorial-Start
-    L1_FEE_GREETING: {
-      id: "L1_FEE_GREETING",
-      type: "tutorial",
-      text: `Eine kleine, blaue Fee erscheint in einem Lichtblitz!
+        // L1_FEE_GREETING - Tutorial-Start
+        L1_FEE_GREETING: {
+            id: "L1_FEE_GREETING",
+            type: "tutorial",
+            text: `Eine kleine, blaue Fee erscheint in einem Lichtblitz!
 
 🧚 "Willkommen, tapferer Held!
 Mein Name ist Struktura, Hüterin der Ordnung.
@@ -106,34 +113,34 @@ Commands:
 - Tippe 'sprich fee' um mehr zu erfahren
 - Tippe 'schaue' um dich umzusehen
 - Tippe 'hilfe' wenn du Tipps brauchst`,
-      npc: { name: "Fee Struktura", mood: "welcoming" },
-      effects: [
-        { type: "setFlag", flag: "met_fairy", value: true }
-      ],
-      transitions: [
-        {
-          command: ["sprich fee", "sprich", "rede fee", "frage fee"],
-          nextNodeId: "L1_FEE_EXPLAINS",
-          response: "Die Fee lächelt und beginnt zu erzählen..."
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "welcoming" },
+            effects: [
+                { type: "setFlag", flag: "met_fairy", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["sprich fee", "sprich", "rede fee", "frage fee"],
+                    nextNodeId: "L1_FEE_EXPLAINS",
+                    response: "Die Fee lächelt und beginnt zu erzählen..."
+                },
+                {
+                    command: ["schaue", "schau", "guck"],
+                    nextNodeId: "L1_OVERWHELMED",
+                    response: "Du schaust dich in der Halle um..."
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
+                }
+            ]
         },
-        {
-          command: ["schaue", "schau", "guck"],
-          nextNodeId: "L1_OVERWHELMED",
-          response: "Du schaust dich in der Halle um..."
-        },
-        {
-          command: ["hilfe", "help", "tipp"],
-          nextNodeId: "L1_HELP",
-          response: ""
-        }
-      ]
-    },
 
-    // L1_FEE_EXPLAINS - Fee erklärt die Technik
-    L1_FEE_EXPLAINS: {
-      id: "L1_FEE_EXPLAINS",
-      type: "teaching_moment",
-      text: `🧚 Fee Struktura:
+        // L1_FEE_EXPLAINS - Fee erklärt die Technik
+        L1_FEE_EXPLAINS: {
+            id: "L1_FEE_EXPLAINS",
+            type: "teaching_moment",
+            text: `🧚 Fee Struktura:
 "Das Geheimnis ist:
 
 ╔═══════════════════════════════════════════════════╗
@@ -162,49 +169,49 @@ Und jede kleine Aufgabe zerlegst du NOCH WEITER:
    4. Alle in Waffenkammer bringen
 
 SCHRITT FÜR SCHRITT!"`,
-      npc: { name: "Fee Struktura", mood: "enlightening" },
-      effects: [
-        { type: "addOP", amount: 10 }
-      ],
-      transitions: [
-        {
-          command: ["schaue", "schau", "guck"],
-          nextNodeId: "L1_OVERWHELMED",
-          response: "Du schaust dich um..."
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "enlightening" },
+            effects: [
+                { type: "addOP", amount: 10 }
+            ],
+            transitions: [
+                {
+                    command: ["schaue", "schau", "guck"],
+                    nextNodeId: "L1_OVERWHELMED",
+                    response: "Du schaust dich um..."
+                },
+                {
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: "✅ Gute Wahl! Die Schwerter sind ein guter Start!",
+                    effects: [
+                        { type: "addOP", amount: 5 },
+                        { type: "setFlag", flag: "started_with_swords", value: true }
+                    ]
+                },
+                {
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
+                    nextNodeId: "L1_ARMOR_START",
+                    response: "💪 Mutig! Rüstungen sind schwer, aber machbar!",
+                    effects: [
+                        { type: "setFlag", flag: "started_with_armor", value: true }
+                    ]
+                },
+                {
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    nextNodeId: "L1_FLAGS_START",
+                    response: "🚩 Okay! Fahnen müssen sortiert werden!",
+                    effects: [
+                        { type: "setFlag", flag: "started_with_flags", value: true }
+                    ]
+                }
+            ]
         },
-        {
-          command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern"],
-          nextNodeId: "L1_SWORDS_START",
-          response: "✅ Gute Wahl! Die Schwerter sind ein guter Start!",
-          effects: [
-            { type: "addOP", amount: 5 },
-            { type: "setFlag", flag: "started_with_swords", value: true }
-          ]
-        },
-        {
-          command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
-          nextNodeId: "L1_ARMOR_START",
-          response: "💪 Mutig! Rüstungen sind schwer, aber machbar!",
-          effects: [
-            { type: "setFlag", flag: "started_with_armor", value: true }
-          ]
-        },
-        {
-          command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
-          nextNodeId: "L1_FLAGS_START",
-          response: "🚩 Okay! Fahnen müssen sortiert werden!",
-          effects: [
-            { type: "setFlag", flag: "started_with_flags", value: true }
-          ]
-        }
-      ]
-    },
 
-    // L1_OVERWHELMED - Überwältigung zeigen
-    L1_OVERWHELMED: {
-      id: "L1_OVERWHELMED",
-      type: "challenge_introduction",
-      text: `Du schaust dich um und... wow.
+        // L1_OVERWHELMED - Überwältigung zeigen
+        L1_OVERWHELMED: {
+            id: "L1_OVERWHELMED",
+            type: "challenge_introduction",
+            text: `Du schaust dich um und... wow.
 
 Das ist VIEL zu aufräumen!
 
@@ -225,26 +232,26 @@ Genau SO fühlen sich große Aufgaben an!
 Aber weißt du was? Das ist eine ILLUSION!
 
 Lass mich dir ein Geheimnis verraten..."`,
-      npc: { name: "Fee Struktura", mood: "concerned" },
-      transitions: [
-        {
-          command: ["sprich fee", "sprich", "rede fee"],
-          nextNodeId: "L1_FIRST_LESSON",
-          response: "Die Fee erklärt dir die Technik..."
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "concerned" },
+            transitions: [
+                {
+                    command: ["sprich fee", "sprich", "rede fee"],
+                    nextNodeId: "L1_FIRST_LESSON",
+                    response: "Die Fee erklärt dir die Technik..."
+                },
+                {
+                    command: ["hilfe", "help"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
+                }
+            ]
         },
-        {
-          command: ["hilfe", "help"],
-          nextNodeId: "L1_HELP",
-          response: ""
-        }
-      ]
-    },
 
-    // L1_FIRST_LESSON - Die Kern-Technik
-    L1_FIRST_LESSON: {
-      id: "L1_FIRST_LESSON",
-      type: "teaching_moment",
-      text: `🧚 Fee Struktura:
+        // L1_FIRST_LESSON - Die Kern-Technik
+        L1_FIRST_LESSON: {
+            id: "L1_FIRST_LESSON",
+            type: "teaching_moment",
+            text: `🧚 Fee Struktura:
 "Das Geheimnis ist:
 
 ╔═══════════════════════════════════════════════════╗
@@ -275,48 +282,48 @@ Und jede kleine Aufgabe zerlegst du NOCH WEITER:
 SCHRITT FÜR SCHRITT!"
 
 +10 OP für Aufmerksamkeit!`,
-      npc: { name: "Fee Struktura", mood: "enlightening" },
-      effects: [
-        { type: "addOP", amount: 10 }
-      ],
-      transitions: [
-        {
-          command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern"],
-          nextNodeId: "L1_SWORDS_START",
-          response: "✅ Gute Wahl! Die Schwerter sind ein guter Start!",
-          effects: [
-            { type: "addOP", amount: 5 },
-            { type: "setFlag", flag: "started_with_swords", value: true }
-          ]
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "enlightening" },
+            effects: [
+                { type: "addOP", amount: 10 }
+            ],
+            transitions: [
+                {
+                    command: ["nimm schwert", "schwert nehmen", "beginne mit schwertern"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: "✅ Gute Wahl! Die Schwerter sind ein guter Start!",
+                    effects: [
+                        { type: "addOP", amount: 5 },
+                        { type: "setFlag", flag: "started_with_swords", value: true }
+                    ]
+                },
+                {
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
+                    nextNodeId: "L1_ARMOR_START",
+                    response: "💪 Mutig! Rüstungen sind schwer, aber machbar!",
+                    effects: [
+                        { type: "setFlag", flag: "started_with_armor", value: true }
+                    ]
+                },
+                {
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    nextNodeId: "L1_FLAGS_START",
+                    response: "🚩 Okay! Fahnen müssen sortiert werden!",
+                    effects: [
+                        { type: "setFlag", flag: "started_with_flags", value: true }
+                    ]
+                }
+            ]
         },
-        {
-          command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
-          nextNodeId: "L1_ARMOR_START",
-          response: "💪 Mutig! Rüstungen sind schwer, aber machbar!",
-          effects: [
-            { type: "setFlag", flag: "started_with_armor", value: true }
-          ]
-        },
-        {
-          command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
-          nextNodeId: "L1_FLAGS_START",
-          response: "🚩 Okay! Fahnen müssen sortiert werden!",
-          effects: [
-            { type: "setFlag", flag: "started_with_flags", value: true }
-          ]
-        }
-      ]
-    },
 
-    // L1_DECISION - Erste Entscheidung (wird durch L1_FIRST_LESSON abgedeckt)
+        // L1_DECISION - Erste Entscheidung (wird durch L1_FIRST_LESSON abgedeckt)
 
-    // === SCHWERTER-PFAD ===
+        // === SCHWERTER-PFAD ===
 
-    // L1_SWORDS_START - Schwerter aufräumen beginnen
-    L1_SWORDS_START: {
-      id: "L1_SWORDS_START",
-      type: "task",
-      text: `Du entscheidest dich für die Schwerter!
+        // L1_SWORDS_START - Schwerter aufräumen beginnen
+        L1_SWORDS_START: {
+            id: "L1_SWORDS_START",
+            type: "task",
+            text: `Du entscheidest dich für die Schwerter!
 
 Drei Schwerter liegen am Boden:
 ⚔️ SCHWERT 1 (beim Eingang)
@@ -336,34 +343,34 @@ Commands:
 - 'nimm schwert 1' oder 'nimm erstes schwert'
 - 'nimm schwert 2'
 - 'nimm schwert 3'`,
-      npc: { name: "Fee Struktura", mood: "helpful" },
-      transitions: [
-        {
-          command: ["nimm schwert 1", "nimm erstes schwert", "nimm schwert"],
-          nextNodeId: "L1_SWORD_1_TAKEN",
-          response: "Du hebst das erste Schwert auf!",
-          conditions: [
-            { type: "not", flag: "sword_1_taken" }
-          ],
-          effects: [
-            { type: "addOP", amount: 5 },
-            { type: "addToInventory", item: "sword_1" },
-            { type: "setFlag", flag: "sword_1_taken", value: true }
-          ]
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "helpful" },
+            transitions: [
+                {
+                    command: ["nimm schwert 1", "nimm erstes schwert", "nimm schwert"],
+                    nextNodeId: "L1_SWORD_1_TAKEN",
+                    response: "Du hebst das erste Schwert auf!",
+                    conditions: [
+                        { type: "not", flag: "sword_1_taken" }
+                    ],
+                    effects: [
+                        { type: "addOP", amount: 5 },
+                        { type: "addToInventory", item: "sword_1" },
+                        { type: "setFlag", flag: "sword_1_taken", value: true }
+                    ]
+                },
+                {
+                    command: ["nimm alle schwerter", "nimm alle"],
+                    nextNodeId: "L1_TOO_FAST",
+                    response: "⚠️ Moment! Nicht so schnell!"
+                }
+            ]
         },
-        {
-          command: ["nimm alle schwerter", "nimm alle"],
-          nextNodeId: "L1_TOO_FAST",
-          response: "⚠️ Moment! Nicht so schnell!"
-        }
-      ]
-    },
 
-    // L1_SWORD_1_TAKEN - Erstes Erfolgserlebnis
-    L1_SWORD_1_TAKEN: {
-      id: "L1_SWORD_1_TAKEN",
-      type: "success",
-      text: `*KLING* ⚔️
+        // L1_SWORD_1_TAKEN - Erstes Erfolgserlebnis
+        L1_SWORD_1_TAKEN: {
+            id: "L1_SWORD_1_TAKEN",
+            type: "success",
+            text: `*KLING* ⚔️
 
 Du hebst das erste Schwert auf!
 Es fühlt sich gut an!
@@ -380,25 +387,25 @@ Und jetzt? Genau! Der NÄCHSTE Schritt!
 Nimm das zweite Schwert!"
 
 Fortschritt: 🟩⬜⬜ 1/3 Schwerter`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      transitions: [
-        {
-          command: ["nimm schwert 2", "nimm zweites schwert", "nimm schwert"],
-          nextNodeId: "L1_SWORD_2_TAKEN",
-          response: "Du gehst zum zweiten Schwert...",
-          conditions: [
-            { type: "hasFlag", flag: "sword_1_taken", value: true },
-            { type: "not", flag: "sword_2_taken" }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            transitions: [
+                {
+                    command: ["nimm schwert 2", "nimm zweites schwert", "nimm schwert"],
+                    nextNodeId: "L1_SWORD_2_TAKEN",
+                    response: "Du gehst zum zweiten Schwert...",
+                    conditions: [
+                        { type: "hasFlag", flag: "sword_1_taken", value: true },
+                        { type: "not", flag: "sword_2_taken" }
+                    ]
+                }
+            ]
+        },
 
-    // L1_SWORD_2_TAKEN
-    L1_SWORD_2_TAKEN: {
-      id: "L1_SWORD_2_TAKEN",
-      type: "progress",
-      text: `*KLING* ⚔️
+        // L1_SWORD_2_TAKEN
+        L1_SWORD_2_TAKEN: {
+            id: "L1_SWORD_2_TAKEN",
+            type: "progress",
+            text: `*KLING* ⚔️
 
 Das zweite Schwert ist auch eingesammelt!
 
@@ -412,30 +419,30 @@ Schritt für Schritt wird die Aufgabe KLEINER!
 Noch ein Schwert, dann ist dieser Teil FERTIG!"
 
 Fortschritt: 🟩🟩⬜ 2/3 Schwerter`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      effects: [
-        { type: "addOP", amount: 5 },
-        { type: "addToInventory", item: "sword_2" },
-        { type: "setFlag", flag: "sword_2_taken", value: true }
-      ],
-      transitions: [
-        {
-          command: ["nimm schwert 3", "nimm drittes schwert", "nimm schwert"],
-          nextNodeId: "L1_SWORD_3_TAKEN",
-          response: "Du gehst zum dritten Schwert...",
-          conditions: [
-            { type: "hasFlag", flag: "sword_2_taken", value: true },
-            { type: "not", flag: "sword_3_taken" }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            effects: [
+                { type: "addOP", amount: 5 },
+                { type: "addToInventory", item: "sword_2" },
+                { type: "setFlag", flag: "sword_2_taken", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["nimm schwert 3", "nimm drittes schwert", "nimm schwert"],
+                    nextNodeId: "L1_SWORD_3_TAKEN",
+                    response: "Du gehst zum dritten Schwert...",
+                    conditions: [
+                        { type: "hasFlag", flag: "sword_2_taken", value: true },
+                        { type: "not", flag: "sword_3_taken" }
+                    ]
+                }
+            ]
+        },
 
-    // L1_SWORD_3_TAKEN
-    L1_SWORD_3_TAKEN: {
-      id: "L1_SWORD_3_TAKEN",
-      type: "progress",
-      text: `*KLING* ⚔️
+        // L1_SWORD_3_TAKEN
+        L1_SWORD_3_TAKEN: {
+            id: "L1_SWORD_3_TAKEN",
+            type: "progress",
+            text: `*KLING* ⚔️
 
 Alle drei Schwerter sind eingesammelt!
 
@@ -451,29 +458,29 @@ Commands:
 - 'bringe schwerter zur waffenkammer'
 
 Fortschritt: 🟩🟩🟩 3/3 Schwerter gesammelt!`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      effects: [
-        { type: "addOP", amount: 5 },
-        { type: "addToInventory", item: "sword_3" },
-        { type: "setFlag", flag: "sword_3_taken", value: true }
-      ],
-      transitions: [
-        {
-          command: ["gehe zur waffenkammer", "bringe schwerter", "waffenkammer", "gehe waffenkammer"],
-          nextNodeId: "L1_SWORDS_COMPLETE",
-          response: "Du bringst die Schwerter zur Waffenkammer...",
-          conditions: [
-            { type: "hasFlag", flag: "sword_3_taken", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            effects: [
+                { type: "addOP", amount: 5 },
+                { type: "addToInventory", item: "sword_3" },
+                { type: "setFlag", flag: "sword_3_taken", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["gehe zur waffenkammer", "bringe schwerter", "waffenkammer", "gehe waffenkammer"],
+                    nextNodeId: "L1_SWORDS_COMPLETE",
+                    response: "Du bringst die Schwerter zur Waffenkammer...",
+                    conditions: [
+                        { type: "hasFlag", flag: "sword_3_taken", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_SWORDS_COMPLETE - Teilaufgabe abgeschlossen!
-    L1_SWORDS_COMPLETE: {
-      id: "L1_SWORDS_COMPLETE",
-      type: "milestone",
-      text: `Du bringst die drei Schwerter zur Waffenkammer.
+        // L1_SWORDS_COMPLETE - Teilaufgabe abgeschlossen!
+        L1_SWORDS_COMPLETE: {
+            id: "L1_SWORDS_COMPLETE",
+            type: "milestone",
+            text: `Du bringst die drei Schwerter zur Waffenkammer.
 
 *KLIRR* *KLACK*
 
@@ -507,41 +514,41 @@ FORTSCHRITT IN DER HALLE:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Was machst du als Nächstes?`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "addOP", amount: 20 },
-        { type: "setFlag", flag: "swords_complete", value: true },
-        { type: "updateTask", taskId: "t1", status: "completed" }
-      ],
-      transitions: [
-        {
-          command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
-          nextNodeId: "L1_ARMOR_START",
-          response: "Jetzt die Rüstungen!",
-          conditions: [
-            { type: "hasFlag", flag: "swords_complete", value: true },
-            { type: "not", flag: "armor_complete" }
-          ]
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "addOP", amount: 20 },
+                { type: "setFlag", flag: "swords_complete", value: true },
+                { type: "updateTask", taskId: "t1", status: "completed" }
+            ],
+            transitions: [
+                {
+                    command: ["richte rüstung auf", "rüstung aufstellen", "beginne mit rüstungen"],
+                    nextNodeId: "L1_ARMOR_START",
+                    response: "Jetzt die Rüstungen!",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "not", flag: "armor_complete" }
+                    ]
+                },
+                {
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    nextNodeId: "L1_FLAGS_START",
+                    response: "Jetzt die Fahnen!",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "not", flag: "flags_complete" }
+                    ]
+                }
+            ]
         },
-        {
-          command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
-          nextNodeId: "L1_FLAGS_START",
-          response: "Jetzt die Fahnen!",
-          conditions: [
-            { type: "hasFlag", flag: "swords_complete", value: true },
-            { type: "not", flag: "flags_complete" }
-          ]
-        }
-      ]
-    },
 
-    // === RÜSTUNGEN-PFAD ===
+        // === RÜSTUNGEN-PFAD ===
 
-    // L1_ARMOR_START - Rüstungen (schwerer!)
-    L1_ARMOR_START: {
-      id: "L1_ARMOR_START",
-      type: "task",
-      text: `Jetzt die Rüstungen!
+        // L1_ARMOR_START - Rüstungen (schwerer!)
+        L1_ARMOR_START: {
+            id: "L1_ARMOR_START",
+            type: "task",
+            text: `Jetzt die Rüstungen!
 
 Drei schwere Ritterrüstungen sind umgefallen:
 🛡️ RÜSTUNG 1 (beim Kamin)
@@ -563,28 +570,28 @@ Tipp: Jede Rüstung braucht 2 Schritte:
 Commands:
 - 'richte rüstung 1 auf'
 - 'stelle rüstung 1 hin'`,
-      npc: { name: "Fee Struktura", mood: "helpful" },
-      transitions: [
-        {
-          command: ["richte rüstung 1 auf", "richte erste rüstung auf", "richte rüstung auf"],
-          nextNodeId: "L1_ARMOR_1_UP",
-          response: "Du richtest die erste Rüstung auf...",
-          conditions: [
-            { type: "not", flag: "armor_1_up" }
-          ],
-          effects: [
-            { type: "addOP", amount: 5 },
-            { type: "setFlag", flag: "armor_1_up", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "helpful" },
+            transitions: [
+                {
+                    command: ["richte rüstung 1 auf", "richte erste rüstung auf", "richte rüstung auf"],
+                    nextNodeId: "L1_ARMOR_1_UP",
+                    response: "Du richtest die erste Rüstung auf...",
+                    conditions: [
+                        { type: "not", flag: "armor_1_up" }
+                    ],
+                    effects: [
+                        { type: "addOP", amount: 5 },
+                        { type: "setFlag", flag: "armor_1_up", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_ARMOR_1_UP
-    L1_ARMOR_1_UP: {
-      id: "L1_ARMOR_1_UP",
-      type: "progress",
-      text: `*KLACK* 🛡️
+        // L1_ARMOR_1_UP
+        L1_ARMOR_1_UP: {
+            id: "L1_ARMOR_1_UP",
+            type: "progress",
+            text: `*KLACK* 🛡️
 
 Die erste Rüstung steht wieder!
 
@@ -593,25 +600,25 @@ Die erste Rüstung steht wieder!
 🧚 "Gut gemacht! Noch 2 Rüstungen übrig.
 
 Fortschritt: 🟩⬜⬜ 1/3 Rüstungen"`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      transitions: [
-        {
-          command: ["richte rüstung 2 auf", "richte zweite rüstung auf", "richte rüstung auf"],
-          nextNodeId: "L1_ARMOR_2_UP",
-          response: "Du gehst zur zweiten Rüstung...",
-          conditions: [
-            { type: "hasFlag", flag: "armor_1_up", value: true },
-            { type: "not", flag: "armor_2_up" }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            transitions: [
+                {
+                    command: ["richte rüstung 2 auf", "richte zweite rüstung auf", "richte rüstung auf"],
+                    nextNodeId: "L1_ARMOR_2_UP",
+                    response: "Du gehst zur zweiten Rüstung...",
+                    conditions: [
+                        { type: "hasFlag", flag: "armor_1_up", value: true },
+                        { type: "not", flag: "armor_2_up" }
+                    ]
+                }
+            ]
+        },
 
-    // L1_ARMOR_2_UP
-    L1_ARMOR_2_UP: {
-      id: "L1_ARMOR_2_UP",
-      type: "progress",
-      text: `*KLACK* 🛡️
+        // L1_ARMOR_2_UP
+        L1_ARMOR_2_UP: {
+            id: "L1_ARMOR_2_UP",
+            type: "progress",
+            text: `*KLACK* 🛡️
 
 Die zweite Rüstung steht!
 
@@ -620,29 +627,29 @@ Die zweite Rüstung steht!
 🧚 "Perfekt! Noch eine Rüstung!
 
 Fortschritt: 🟩🟩⬜ 2/3 Rüstungen"`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      effects: [
-        { type: "addOP", amount: 5 },
-        { type: "setFlag", flag: "armor_2_up", value: true }
-      ],
-      transitions: [
-        {
-          command: ["richte rüstung 3 auf", "richte dritte rüstung auf", "richte rüstung auf"],
-          nextNodeId: "L1_ARMOR_3_UP",
-          response: "Du gehst zur letzten Rüstung...",
-          conditions: [
-            { type: "hasFlag", flag: "armor_2_up", value: true },
-            { type: "not", flag: "armor_3_up" }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            effects: [
+                { type: "addOP", amount: 5 },
+                { type: "setFlag", flag: "armor_2_up", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["richte rüstung 3 auf", "richte dritte rüstung auf", "richte rüstung auf"],
+                    nextNodeId: "L1_ARMOR_3_UP",
+                    response: "Du gehst zur letzten Rüstung...",
+                    conditions: [
+                        { type: "hasFlag", flag: "armor_2_up", value: true },
+                        { type: "not", flag: "armor_3_up" }
+                    ]
+                }
+            ]
+        },
 
-    // L1_ARMOR_3_UP
-    L1_ARMOR_3_UP: {
-      id: "L1_ARMOR_3_UP",
-      type: "milestone",
-      text: `*KLACK* 🛡️
+        // L1_ARMOR_3_UP
+        L1_ARMOR_3_UP: {
+            id: "L1_ARMOR_3_UP",
+            type: "milestone",
+            text: `*KLACK* 🛡️
 
 Alle drei Rüstungen stehen majestätisch!
 
@@ -661,43 +668,43 @@ FORTSCHRITT IN DER HALLE:
 ✅ Rüstungen aufgestellt
 ⬜ Fahnen noch zu tun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "addOP", amount: 20 },
-        { type: "setFlag", flag: "armor_3_up", value: true },
-        { type: "setFlag", flag: "armor_complete", value: true },
-        { type: "updateTask", taskId: "t2", status: "completed" }
-      ],
-      transitions: [
-        {
-          command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
-          nextNodeId: "L1_FLAGS_START",
-          response: "Jetzt die Fahnen!",
-          conditions: [
-            { type: "hasFlag", flag: "armor_complete", value: true },
-            { type: "not", flag: "flags_complete" }
-          ]
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "addOP", amount: 20 },
+                { type: "setFlag", flag: "armor_3_up", value: true },
+                { type: "setFlag", flag: "armor_complete", value: true },
+                { type: "updateTask", taskId: "t2", status: "completed" }
+            ],
+            transitions: [
+                {
+                    command: ["sortiere fahnen", "fahnen sortieren", "beginne mit fahnen"],
+                    nextNodeId: "L1_FLAGS_START",
+                    response: "Jetzt die Fahnen!",
+                    conditions: [
+                        { type: "hasFlag", flag: "armor_complete", value: true },
+                        { type: "not", flag: "flags_complete" }
+                    ]
+                },
+                {
+                    command: ["schaue", "schau"],
+                    nextNodeId: "L1_CHECK_COMPLETE",
+                    response: "Du schaust dich um...",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "hasFlag", flag: "armor_complete", value: true },
+                        { type: "hasFlag", flag: "flags_complete", value: true }
+                    ]
+                }
+            ]
         },
-        {
-          command: ["schaue", "schau"],
-          nextNodeId: "L1_CHECK_COMPLETE",
-          response: "Du schaust dich um...",
-          conditions: [
-            { type: "hasFlag", flag: "swords_complete", value: true },
-            { type: "hasFlag", flag: "armor_complete", value: true },
-            { type: "hasFlag", flag: "flags_complete", value: true }
-          ]
-        }
-      ]
-    },
 
-    // === FAHNEN-PFAD ===
+        // === FAHNEN-PFAD ===
 
-    // L1_FLAGS_START
-    L1_FLAGS_START: {
-      id: "L1_FLAGS_START",
-      type: "task",
-      text: `Jetzt die Fahnen!
+        // L1_FLAGS_START
+        L1_FLAGS_START: {
+            id: "L1_FLAGS_START",
+            type: "task",
+            text: `Jetzt die Fahnen!
 
 Sechs Fahnen liegen verstreut:
 🚩 3x BLAUE Fahnen
@@ -713,32 +720,32 @@ Zerlege es:
 Commands:
 - 'nimm blaue fahne' oder 'sammle blaue fahnen'
 - 'nimm rote fahne' oder 'sammle rote fahnen'`,
-      npc: { name: "Fee Struktura", mood: "helpful" },
-      transitions: [
-        {
-          command: ["nimm blaue fahne", "sammle blaue fahnen", "nimm fahne"],
-          nextNodeId: "L1_FLAGS_BLUE_START",
-          response: "Du beginnst mit den blauen Fahnen...",
-          conditions: [
-            { type: "not", flag: "flags_complete" }
-          ]
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "helpful" },
+            transitions: [
+                {
+                    command: ["nimm blaue fahne", "sammle blaue fahnen", "nimm fahne"],
+                    nextNodeId: "L1_FLAGS_BLUE_START",
+                    response: "Du beginnst mit den blauen Fahnen...",
+                    conditions: [
+                        { type: "not", flag: "flags_complete" }
+                    ]
+                },
+                {
+                    command: ["nimm rote fahne", "sammle rote fahnen"],
+                    nextNodeId: "L1_FLAGS_RED_START",
+                    response: "Du beginnst mit den roten Fahnen...",
+                    conditions: [
+                        { type: "not", flag: "flags_complete" }
+                    ]
+                }
+            ]
         },
-        {
-          command: ["nimm rote fahne", "sammle rote fahnen"],
-          nextNodeId: "L1_FLAGS_RED_START",
-          response: "Du beginnst mit den roten Fahnen...",
-          conditions: [
-            { type: "not", flag: "flags_complete" }
-          ]
-        }
-      ]
-    },
 
-    // L1_FLAGS_BLUE_START
-    L1_FLAGS_BLUE_START: {
-      id: "L1_FLAGS_BLUE_START",
-      type: "task",
-      text: `Du sammelst die blauen Fahnen.
+        // L1_FLAGS_BLUE_START
+        L1_FLAGS_BLUE_START: {
+            id: "L1_FLAGS_BLUE_START",
+            type: "task",
+            text: `Du sammelst die blauen Fahnen.
 
 🚩 Blaue Fahne 1... ✅
 🚩 Blaue Fahne 2... ✅
@@ -747,28 +754,28 @@ Commands:
 +10 OP!
 
 🧚 "Gut! Jetzt die roten Fahnen!"`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      effects: [
-        { type: "addOP", amount: 10 },
-        { type: "setFlag", flag: "blue_flags_collected", value: true }
-      ],
-      transitions: [
-        {
-          command: ["nimm rote fahne", "sammle rote fahnen", "nimm fahne"],
-          nextNodeId: "L1_FLAGS_RED_START",
-          response: "Du sammelst die roten Fahnen...",
-          conditions: [
-            { type: "hasFlag", flag: "blue_flags_collected", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            effects: [
+                { type: "addOP", amount: 10 },
+                { type: "setFlag", flag: "blue_flags_collected", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["nimm rote fahne", "sammle rote fahnen", "nimm fahne"],
+                    nextNodeId: "L1_FLAGS_RED_START",
+                    response: "Du sammelst die roten Fahnen...",
+                    conditions: [
+                        { type: "hasFlag", flag: "blue_flags_collected", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_FLAGS_RED_START
-    L1_FLAGS_RED_START: {
-      id: "L1_FLAGS_RED_START",
-      type: "task",
-      text: `Du sammelst die roten Fahnen.
+        // L1_FLAGS_RED_START
+        L1_FLAGS_RED_START: {
+            id: "L1_FLAGS_RED_START",
+            type: "task",
+            text: `Du sammelst die roten Fahnen.
 
 🚩 Rote Fahne 1... ✅
 🚩 Rote Fahne 2... ✅
@@ -777,29 +784,29 @@ Commands:
 +10 OP!
 
 🧚 "Perfekt! Jetzt sortiere sie ordentlich!"`,
-      npc: { name: "Fee Struktura", mood: "encouraging" },
-      effects: [
-        { type: "addOP", amount: 10 },
-        { type: "setFlag", flag: "red_flags_collected", value: true }
-      ],
-      transitions: [
-        {
-          command: ["sortiere fahnen", "ordne fahnen", "lege fahnen zusammen"],
-          nextNodeId: "L1_FLAGS_COMPLETE",
-          response: "Du sortierst die Fahnen...",
-          conditions: [
-            { type: "hasFlag", flag: "blue_flags_collected", value: true },
-            { type: "hasFlag", flag: "red_flags_collected", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "encouraging" },
+            effects: [
+                { type: "addOP", amount: 10 },
+                { type: "setFlag", flag: "red_flags_collected", value: true }
+            ],
+            transitions: [
+                {
+                    command: ["sortiere fahnen", "ordne fahnen", "lege fahnen zusammen"],
+                    nextNodeId: "L1_FLAGS_COMPLETE",
+                    response: "Du sortierst die Fahnen...",
+                    conditions: [
+                        { type: "hasFlag", flag: "blue_flags_collected", value: true },
+                        { type: "hasFlag", flag: "red_flags_collected", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_FLAGS_COMPLETE
-    L1_FLAGS_COMPLETE: {
-      id: "L1_FLAGS_COMPLETE",
-      type: "milestone",
-      text: `Du sortierst die verstaubten Fahnen und legst sie ordentlich zusammen.
+        // L1_FLAGS_COMPLETE
+        L1_FLAGS_COMPLETE: {
+            id: "L1_FLAGS_COMPLETE",
+            type: "milestone",
+            text: `Du sortierst die verstaubten Fahnen und legst sie ordentlich zusammen.
 
 Die Farben leuchten wieder!
 
@@ -815,31 +822,31 @@ FORTSCHRITT IN DER HALLE:
 ✅ Rüstungen aufgestellt
 ✅ Fahnen sortiert
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "addOP", amount: 20 },
-        { type: "setFlag", flag: "flags_complete", value: true },
-        { type: "updateTask", taskId: "t3", status: "completed" }
-      ],
-      transitions: [
-        {
-          command: ["schaue", "schau"],
-          nextNodeId: "L1_ALL_TASKS_DONE",
-          response: "Du schaust dich um...",
-          conditions: [
-            { type: "hasFlag", flag: "swords_complete", value: true },
-            { type: "hasFlag", flag: "armor_complete", value: true },
-            { type: "hasFlag", flag: "flags_complete", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "addOP", amount: 20 },
+                { type: "setFlag", flag: "flags_complete", value: true },
+                { type: "updateTask", taskId: "t3", status: "completed" }
+            ],
+            transitions: [
+                {
+                    command: ["schaue", "schau"],
+                    nextNodeId: "L1_ALL_TASKS_DONE",
+                    response: "Du schaust dich um...",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "hasFlag", flag: "armor_complete", value: true },
+                        { type: "hasFlag", flag: "flags_complete", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_CHECK_COMPLETE - Check if all tasks done
-    L1_CHECK_COMPLETE: {
-      id: "L1_CHECK_COMPLETE",
-      type: "level_milestone",
-      text: `Du schaust dich um...
+        // L1_CHECK_COMPLETE - Check if all tasks done
+        L1_CHECK_COMPLETE: {
+            id: "L1_CHECK_COMPLETE",
+            type: "level_milestone",
+            text: `Du schaust dich um...
 
 Die Halle glänzt wieder!
 
@@ -852,26 +859,26 @@ Die Eingangshalle ist wieder in Ordnung!
 *GLOW* ✨
 
 Ein goldenes Licht erfüllt den Raum!`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      transitions: [
-        {
-          command: ["schaue", "schau", "weiter"],
-          nextNodeId: "L1_ALL_TASKS_DONE",
-          response: "",
-          conditions: [
-            { type: "hasFlag", flag: "swords_complete", value: true },
-            { type: "hasFlag", flag: "armor_complete", value: true },
-            { type: "hasFlag", flag: "flags_complete", value: true }
-          ]
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            transitions: [
+                {
+                    command: ["schaue", "schau", "weiter"],
+                    nextNodeId: "L1_ALL_TASKS_DONE",
+                    response: "",
+                    conditions: [
+                        { type: "hasFlag", flag: "swords_complete", value: true },
+                        { type: "hasFlag", flag: "armor_complete", value: true },
+                        { type: "hasFlag", flag: "flags_complete", value: true }
+                    ]
+                }
+            ]
+        },
 
-    // L1_ALL_TASKS_DONE - Alle Teilaufgaben erledigt
-    L1_ALL_TASKS_DONE: {
-      id: "L1_ALL_TASKS_DONE",
-      type: "level_milestone",
-      text: `🧚 Fee Struktura:
+        // L1_ALL_TASKS_DONE - Alle Teilaufgaben erledigt
+        L1_ALL_TASKS_DONE: {
+            id: "L1_ALL_TASKS_DONE",
+            type: "level_milestone",
+            text: `🧚 Fee Struktura:
 "DU HAST ES GESCHAFFT! 🌟
 
 Die erste Prüfung ist bestanden!
@@ -881,24 +888,24 @@ Die Eingangshalle ist wieder ordentlich!
 
 Aber bevor du weitergehst...
 Lass uns kurz über das sprechen, was du gelernt hast!"`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "addOP", amount: 30 }
-      ],
-      transitions: [
-        {
-          command: ["weiter", "ja", "okay"],
-          nextNodeId: "L1_REFLECTION",
-          response: ""
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "addOP", amount: 30 }
+            ],
+            transitions: [
+                {
+                    command: ["weiter", "ja", "okay"],
+                    nextNodeId: "L1_REFLECTION",
+                    response: ""
+                }
+            ]
+        },
 
-    // L1_REFLECTION - Meta-Learning
-    L1_REFLECTION: {
-      id: "L1_REFLECTION",
-      type: "reflection",
-      text: `🧚 Fee Struktura setzt sich auf deine Schulter:
+        // L1_REFLECTION - Meta-Learning
+        L1_REFLECTION: {
+            id: "L1_REFLECTION",
+            type: "reflection",
+            text: `🧚 Fee Struktura setzt sich auf deine Schulter:
 
 "Lass uns kurz innehalten.
 
@@ -938,24 +945,24 @@ IMMER GLEICH:
 Das ist deine SUPERPOWER! 💪"
 
 +20 OP für Meta-Learning!`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "addOP", amount: 20 }
-      ],
-      transitions: [
-        {
-          command: ["weiter", "ja", "verstanden"],
-          nextNodeId: "L1_COMPLETE",
-          response: ""
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "addOP", amount: 20 }
+            ],
+            transitions: [
+                {
+                    command: ["weiter", "ja", "verstanden"],
+                    nextNodeId: "L1_COMPLETE",
+                    response: ""
+                }
+            ]
+        },
 
-    // L1_COMPLETE - Level abgeschlossen
-    L1_COMPLETE: {
-      id: "L1_COMPLETE",
-      type: "levelComplete",
-      text: `
+        // L1_COMPLETE - Level abgeschlossen
+        L1_COMPLETE: {
+            id: "L1_COMPLETE",
+            type: "levelComplete",
+            text: `
 ╔═══════════════════════════════════════════════════╗
 ║        LEVEL 1: EINGANGSHALLE                    ║
 ║           ABGESCHLOSSEN!                         ║
@@ -978,28 +985,28 @@ Du wirst lernen zu KATEGORISIEREN!"
 Commands:
 - 'weiter' oder 'nächstes level'
 - 'statistik' um Details zu sehen`,
-      npc: { name: "Fee Struktura", mood: "proud" },
-      effects: [
-        { type: "completeLevel", level: 1 },
-        { type: "unlockLevel", level: 2 },
-        { type: "addToInventory", item: "magischer_besen" },
-        { type: "addToInventory", item: "organisations_tagebuch" },
-        { type: "unlockAchievement", achievement: "erste_schritte" }
-      ],
-      transitions: [
-        {
-          command: ["weiter", "nächstes level", "level 2"],
-          nextNodeId: "L1_COMPLETE",
-          response: "Level 2 wird später implementiert!"
-        }
-      ]
-    },
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "proud" },
+            effects: [
+                { type: "completeLevel", level: 1 },
+                { type: "unlockLevel", level: 2 },
+                { type: "addToInventory", item: "magischer_besen" },
+                { type: "addToInventory", item: "organisations_tagebuch" },
+                { type: "unlockAchievement", achievement: "erste_schritte" }
+            ],
+            transitions: [
+                {
+                    command: ["weiter", "nächstes level", "level 2"],
+                    nextNodeId: "L1_COMPLETE",
+                    response: "Level 2 wird später implementiert!"
+                }
+            ]
+        },
 
-    // L1_TOO_FAST - Warnung bei zu schnellem Vorgehen
-    L1_TOO_FAST: {
-      id: "L1_TOO_FAST",
-      type: "story",
-      text: `⚠️ Moment! Nicht so schnell!
+        // L1_TOO_FAST - Warnung bei zu schnellem Vorgehen
+        L1_TOO_FAST: {
+            id: "L1_TOO_FAST",
+            type: "story",
+            text: `⚠️ Moment! Nicht so schnell!
 
 🧚 Fee Struktura:
 "Du versuchst, alles auf einmal zu machen?
@@ -1012,26 +1019,26 @@ Dann das zweite.
 Dann das dritte.
 
 Schritt für Schritt!"`,
-      npc: { name: "Fee Struktura", mood: "concerned" },
-      transitions: [
-        {
-          command: ["nimm schwert 1", "nimm erstes schwert"],
-          nextNodeId: "L1_SWORD_1_TAKEN",
-          response: "Du beginnst richtig..."
+            npc: { name: "Fee Struktura", image: "/images/struktura.jpeg", mood: "concerned" },
+            transitions: [
+                {
+                    command: ["nimm schwert 1", "nimm erstes schwert"],
+                    nextNodeId: "L1_SWORD_1_TAKEN",
+                    response: "Du beginnst richtig..."
+                },
+                {
+                    command: ["schaue", "hilfe"],
+                    nextNodeId: "L1_SWORDS_START",
+                    response: ""
+                }
+            ]
         },
-        {
-          command: ["schaue", "hilfe"],
-          nextNodeId: "L1_SWORDS_START",
-          response: ""
-        }
-      ]
-    },
 
-    // L1_HELP - Hilfe-System
-    L1_HELP: {
-      id: "L1_HELP",
-      type: "story",
-      text: `Verfügbare Befehle:
+        // L1_HELP - Hilfe-System
+        L1_HELP: {
+            id: "L1_HELP",
+            type: "story",
+            text: `Verfügbare Befehle:
 
 📋 NAVIGATION:
 - schaue / schau / guck (um dich umzusehen)
@@ -1049,18 +1056,18 @@ Schritt für Schritt!"`,
 💡 TIPP:
 Zerlege große Aufgaben in kleine Schritte!
 Jeder Schritt ist ein Erfolg!`,
-      transitions: [
-        {
-          command: ["schaue", "schau"],
-          nextNodeId: "L1_OVERWHELMED",
-          response: ""
-        },
-        {
-          command: ["sprich fee", "sprich"],
-          nextNodeId: "L1_FEE_GREETING",
-          response: ""
+            transitions: [
+                {
+                    command: ["schaue", "schau"],
+                    nextNodeId: "L1_OVERWHELMED",
+                    response: ""
+                },
+                {
+                    command: ["sprich fee", "sprich"],
+                    nextNodeId: "L1_FEE_GREETING",
+                    response: ""
+                }
+            ]
         }
-      ]
     }
-  }
 };
