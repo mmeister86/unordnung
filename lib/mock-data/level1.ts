@@ -1,6 +1,7 @@
 import { LevelData } from "@/types/game";
 
-export const LEVEL_1_DATA: LevelData = {
+// Initial level data with all tasks set to "pending"
+const createInitialLevel1Data = (): LevelData => ({
     id: 1,
     title: "Die Eingangshalle",
     backgroundImage: "/images/schloss.jpeg",
@@ -1189,4 +1190,13 @@ Jeder Schritt ist ein Erfolg!`,
             ]
         }
     }
+});
+
+// Export the initial level data (this is mutable during gameplay)
+export const LEVEL_1_DATA: LevelData = createInitialLevel1Data();
+
+// Function to get a fresh copy of level 1 data with reset tasks
+// Use this when restarting the game to ensure tasks are reset to "pending"
+export const getInitialLevel1Data = (): LevelData => {
+    return createInitialLevel1Data();
 };

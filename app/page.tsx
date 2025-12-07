@@ -12,7 +12,7 @@ import DialogueBox from "@/components/DialogueBox";
 import Terminal from "@/components/Terminal";
 import CommandInput from "@/components/CommandInput";
 import { INITIAL_GAME_STATE, MOCK_GAME_STATE } from "@/lib/mock-data";
-import LEVEL_1_DATA from "@/lib/mock-data";
+import { getInitialLevel1Data } from "@/lib/mock-data/level1";
 import { GameView, GameNode, LevelData } from "@/types/game";
 import { GameEngine } from "@/lib/game-engine/game-engine";
 import VictoryScreen from "@/components/VictoryScreen";
@@ -20,7 +20,7 @@ import VictoryScreen from "@/components/VictoryScreen";
 export default function Home() {
     const [currentView, setCurrentView] = useState<GameView>("menu");
     const [gameState, setGameState] = useState(INITIAL_GAME_STATE);
-    const [currentLevel, setCurrentLevel] = useState<LevelData>(LEVEL_1_DATA);
+    const [currentLevel, setCurrentLevel] = useState<LevelData>(getInitialLevel1Data());
     const [currentNode, setCurrentNode] = useState<GameNode>(currentLevel.nodes.start);
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -73,8 +73,10 @@ export default function Home() {
         if (!engineRef.current) {
             console.error("Engine not initialized, initializing now...");
             const initialState = { ...INITIAL_GAME_STATE, activeNodeId: "start" };
-            engineRef.current = new GameEngine(initialState, LEVEL_1_DATA);
+            const freshLevelData = getInitialLevel1Data();
+            engineRef.current = new GameEngine(initialState, freshLevelData);
             setGameState(initialState);
+            setCurrentLevel(freshLevelData);
         }
 
         setIsProcessing(true);
@@ -157,21 +159,23 @@ export default function Home() {
 
     const handleStartLevel = () => {
         setCurrentView("gameplay");
-        // Reset engine for new game
+        // Reset engine for new game with fresh level data (tasks reset to pending)
         const initialState = { ...INITIAL_GAME_STATE, activeNodeId: "start" };
-        engineRef.current = new GameEngine(initialState, LEVEL_1_DATA);
+        const freshLevelData = getInitialLevel1Data();
+        engineRef.current = new GameEngine(initialState, freshLevelData);
         setGameState(initialState);
-        setCurrentLevel(LEVEL_1_DATA);
-        setCurrentNode(LEVEL_1_DATA.nodes.start);
+        setCurrentLevel(freshLevelData);
+        setCurrentNode(freshLevelData.nodes.start);
     };
 
     const handleLoadGame = () => {
         // Initialize engine with mock state
-        engineRef.current = new GameEngine(MOCK_GAME_STATE, LEVEL_1_DATA);
+        const freshLevelData = getInitialLevel1Data();
+        engineRef.current = new GameEngine(MOCK_GAME_STATE, freshLevelData);
         setGameState(MOCK_GAME_STATE);
-        setCurrentLevel(LEVEL_1_DATA);
+        setCurrentLevel(freshLevelData);
         setCurrentView("gameplay");
-        const node = LEVEL_1_DATA.nodes[MOCK_GAME_STATE.activeNodeId] || LEVEL_1_DATA.nodes.start;
+        const node = freshLevelData.nodes[MOCK_GAME_STATE.activeNodeId] || freshLevelData.nodes.start;
         setCurrentNode(node);
     };
 
@@ -196,11 +200,18 @@ export default function Home() {
         //     return;
         // }
         
-        // Fallback: return to menu
+        // Fallback: return to menu and reset level data
+        const freshLevelData = getInitialLevel1Data();
+        engineRef.current = null; // Clear engine reference
+        setCurrentLevel(freshLevelData);
         setCurrentView("menu");
     };
 
     const handleVictoryMenu = () => {
+        // Reset level data and engine when returning to menu to ensure fresh start
+        const freshLevelData = getInitialLevel1Data();
+        engineRef.current = null; // Clear engine reference
+        setCurrentLevel(freshLevelData);
         setCurrentView("menu");
     };
 
