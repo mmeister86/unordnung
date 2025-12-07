@@ -56,8 +56,8 @@ Indem du lernst, große Aufgaben in kleine Schritte zu zerlegen!
                 },
                 {
                     command: ["hilfe", "help"],
-                    nextNodeId: "start",
-                    response: "Tippe 'betrete halle' oder 'öffne tür' um das Spiel zu starten."
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -96,6 +96,11 @@ In der Mitte der Halle steht eine kleine, leuchtende Fee.`,
                     command: ["zurück", "halle", "schaue halle"],
                     nextNodeId: "L1_HALL_HUB",
                     response: "Du gehst in die Mitte der Halle..."
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -223,6 +228,11 @@ SCHRITT FÜR SCHRITT!"`,
                     command: ["zurück", "halle", "schaue halle"],
                     nextNodeId: "L1_HALL_HUB",
                     response: "Du gehst zurück in die Mitte der Halle..."
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -287,6 +297,11 @@ Oder tippe 'zurück' um hierher zurückzukehren, wenn du eine Aufgabe abgeschlos
                     command: ["sprich fee", "sprich", "rede fee"],
                     nextNodeId: "L1_FEE_EXPLAINS",
                     response: "Die Fee erklärt dir nochmal die Technik..."
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -395,6 +410,11 @@ SCHRITT FÜR SCHRITT!"
                     effects: [
                         { type: "setFlag", flag: "started_with_flags", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -446,6 +466,11 @@ Commands:
                     command: ["nimm alle schwerter", "nimm alle"],
                     nextNodeId: "L1_TOO_FAST",
                     response: "⚠️ Moment! Nicht so schnell!"
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -481,6 +506,11 @@ Fortschritt: 🟩⬜⬜ 1/3 Schwerter`,
                         { type: "hasFlag", flag: "sword_1_taken", value: true },
                         { type: "not", flag: "sword_2_taken" }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -518,6 +548,11 @@ Fortschritt: 🟩🟩⬜ 2/3 Schwerter`,
                         { type: "hasFlag", flag: "sword_2_taken", value: true },
                         { type: "not", flag: "sword_3_taken" }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -556,6 +591,11 @@ Fortschritt: 🟩🟩🟩 3/3 Schwerter gesammelt!`,
                     conditions: [
                         { type: "hasFlag", flag: "sword_3_taken", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -625,6 +665,11 @@ Was machst du als Nächstes?`,
                     command: ["zurück", "halle", "schaue", "schau"],
                     nextNodeId: "L1_HALL_HUB",
                     response: "Du gehst zurück in die Mitte der Halle..."
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -670,6 +715,11 @@ Commands:
                         { type: "addOP", amount: 5 },
                         { type: "setFlag", flag: "armor_1_up", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -697,6 +747,11 @@ Fortschritt: 🟩⬜⬜ 1/3 Rüstungen"`,
                         { type: "hasFlag", flag: "armor_1_up", value: true },
                         { type: "not", flag: "armor_2_up" }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -728,6 +783,11 @@ Fortschritt: 🟩🟩⬜ 2/3 Rüstungen"`,
                         { type: "hasFlag", flag: "armor_2_up", value: true },
                         { type: "not", flag: "armor_3_up" }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -836,6 +896,11 @@ Commands:
                     conditions: [
                         { type: "not", flag: "flags_complete" }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -866,6 +931,11 @@ Commands:
                     conditions: [
                         { type: "hasFlag", flag: "blue_flags_collected", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -897,6 +967,11 @@ Commands:
                         { type: "hasFlag", flag: "blue_flags_collected", value: true },
                         { type: "hasFlag", flag: "red_flags_collected", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -990,6 +1065,11 @@ Ein goldenes Licht erfüllt den Raum!`,
                         { type: "hasFlag", flag: "armor_complete", value: true },
                         { type: "hasFlag", flag: "flags_complete", value: true }
                     ]
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -1016,6 +1096,11 @@ Lass uns kurz über das sprechen, was du gelernt hast!"`,
                 {
                     command: ["weiter", "ja", "okay"],
                     nextNodeId: "L1_REFLECTION",
+                    response: ""
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
                     response: ""
                 }
             ]
@@ -1074,6 +1159,11 @@ Das ist deine SUPERPOWER! 💪"
                     command: ["weiter", "ja", "verstanden"],
                     nextNodeId: "L1_COMPLETE",
                     response: ""
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -1118,6 +1208,11 @@ Commands:
                     command: ["weiter", "nächstes level", "level 2"],
                     nextNodeId: "L1_COMPLETE",
                     response: "Level 2 wird später implementiert!"
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
+                    response: ""
                 }
             ]
         },
@@ -1147,8 +1242,13 @@ Schritt für Schritt!"`,
                     response: "Du beginnst richtig..."
                 },
                 {
-                    command: ["schaue", "hilfe"],
+                    command: ["schaue", "schau"],
                     nextNodeId: "L1_SWORDS_START",
+                    response: ""
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
                     response: ""
                 }
             ]
@@ -1158,6 +1258,7 @@ Schritt für Schritt!"`,
         L1_HELP: {
             id: "L1_HELP",
             type: "story",
+            npc: { name: "Erzähler", image: "/images/erzähler.jpeg", mood: "neutral" },
             text: `Verfügbare Befehle:
 
 📋 NAVIGATION:
@@ -1185,6 +1286,11 @@ Jeder Schritt ist ein Erfolg!`,
                 {
                     command: ["sprich fee", "sprich"],
                     nextNodeId: "L1_FEE_GREETING",
+                    response: ""
+                },
+                {
+                    command: ["hilfe", "help", "tipp"],
+                    nextNodeId: "L1_HELP",
                     response: ""
                 }
             ]
