@@ -93,7 +93,7 @@ export type PlayerStats = {
     inventory: string[];
 };
 
-export type GameView = "menu" | "intro" | "gameplay";
+export type GameView = "menu" | "intro" | "gameplay" | "victory";
 
 export type GameProps = {
     gameState: GameState;

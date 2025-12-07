@@ -15,6 +15,7 @@ import { INITIAL_GAME_STATE, MOCK_GAME_STATE } from "@/lib/mock-data";
 import LEVEL_1_DATA from "@/lib/mock-data";
 import { GameView, GameNode, LevelData } from "@/types/game";
 import { GameEngine } from "@/lib/game-engine/game-engine";
+import VictoryScreen from "@/components/VictoryScreen";
 
 export default function Home() {
     const [currentView, setCurrentView] = useState<GameView>("menu");
@@ -32,6 +33,11 @@ export default function Home() {
             const updatedState = engineRef.current.getState();
             const node = currentLevel.nodes[updatedState.activeNodeId] || currentLevel.nodes.start;
             setCurrentNode(node);
+
+            // Check if we've reached the completion node
+            if (node.type === "levelComplete") {
+                setCurrentView("victory");
+            }
         }
     }, [gameState.activeNodeId, currentLevel, currentView]);
 
@@ -70,6 +76,60 @@ export default function Home() {
                         // Update level data
                         const refreshedLevelData = engineRef.current.getLevelData();
                         setCurrentLevel(refreshedLevelData);
+                    }
+                    // Check for level completion
+                    if (effect.type === "completeLevel") {
+                        // Level completed! Switch to victory screen
+                        setCurrentView("victory");
+                    }
+                }
+            }
+
+            // Check if level is complete by node type
+            if (nextNode && nextNode.type === "levelComplete") {
+                setCurrentView("victory");
+            } else {
+                // Also check if all tasks are completed and all completion flags are set
+                const allTasksCompleted = updatedLevelData.tasks.every(
+                    (task) => task.status === "completed"
+                );
+                const allFlagsSet =
+                    updatedState.flags.swords_complete === true &&
+                    updatedState.flags.armor_complete === true &&
+                    updatedState.flags.flags_complete === true;
+
+                if (allTasksCompleted && allFlagsSet && updatedLevelData.tasks.length > 0) {
+                    // All tasks completed, check if we're at a node that should lead to completion
+                    const completionNode = Object.values(updatedLevelData.nodes).find(
+                        (node) => node.type === "levelComplete"
+                    );
+
+                    // If we're already at completion node, show victory
+                    if (completionNode && nextNode.id === completionNode.id) {
+                        setCurrentView("victory");
+                    }
+                    // If we're at L1_ALL_TASKS_DONE or L1_REFLECTION, try to navigate to completion
+                    else if (nextNode.id === "L1_ALL_TASKS_DONE" || nextNode.id === "L1_REFLECTION") {
+                        // Check if there's a transition to completion node
+                        const hasTransitionToComplete = nextNode.transitions?.some(
+                            (t) => updatedLevelData.nodes[t.nextNodeId]?.type === "levelComplete"
+                        );
+                        if (hasTransitionToComplete) {
+                            // Let the player continue naturally through the story
+                            // The victory screen will be shown when they reach L1_COMPLETE
+                        } else {
+                            // No transition found, try to go to completion node directly
+                            if (completionNode) {
+                                // Update to completion node
+                                const updatedStateWithComplete = {
+                                    ...updatedState,
+                                    activeNodeId: completionNode.id
+                                };
+                                engineRef.current = new GameEngine(updatedStateWithComplete, updatedLevelData);
+                                setCurrentNode(completionNode);
+                                setCurrentView("victory");
+                            }
+                        }
                     }
                 }
             }
@@ -133,6 +193,15 @@ export default function Home() {
         alert("Einstellungen noch nicht implementiert");
     };
 
+    const handleVictoryContinue = () => {
+        // For now, just go back to menu (Level 2 not implemented yet)
+        setCurrentView("menu");
+    };
+
+    const handleVictoryMenu = () => {
+        setCurrentView("menu");
+    };
+
     // Render current view
     const renderCurrentView = () => {
         switch (currentView) {
@@ -183,6 +252,19 @@ export default function Home() {
                                 isProcessing={isProcessing}
                             />
                         </div>
+                    </GameContainer>
+                );
+
+            case "victory":
+                return (
+                    <GameContainer view="intro">
+                        <VictoryScreen
+                            level={currentLevel}
+                            stats={gameState.player}
+                            tasks={currentLevel.tasks}
+                            onContinue={handleVictoryContinue}
+                            onMenu={handleVictoryMenu}
+                        />
                     </GameContainer>
                 );
 

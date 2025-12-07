@@ -47,6 +47,7 @@ Prinzessin Ordelia wurde vom Chaos-Zauberer Konfusio entführt! Das gesamte Schl
 ### Pädagogisches Konzept
 
 Das Spiel verwendet die **Scaffolding-Methode** (Gerüst-Methode):
+
 - **Level 1:** Vollständige Anleitung, Schritt-für-Schritt
 - **Level 2-3:** Teilweise Anleitung, mehr Eigenständigkeit
 - **Level 4-6:** Selbstständiges Problemlösen
@@ -116,22 +117,26 @@ Durch **positive Verstärkung** und **sofortiges Feedback** werden Erfolgserlebn
 ### Installation
 
 1. **Repository klonen:**
+
 ```bash
 git clone https://github.com/dein-username/unordnung.git
 cd unordnung
 ```
 
 2. **Dependencies installieren:**
+
 ```bash
 pnpm install
 ```
 
 3. **Entwicklungsserver starten:**
+
 ```bash
 pnpm dev
 ```
 
 4. **Im Browser öffnen:**
+
 ```
 http://localhost:3000
 ```
@@ -157,14 +162,14 @@ pnpm start
 
 ### Grundlegende Commands
 
-| Befehl | Synonyme | Beschreibung |
-|--------|----------|--------------|
-| `schaue` | schau, guck, untersuche, betrachte | Raum oder Objekt anschauen |
-| `nimm` | nehme, hole, greife, sammle | Item aufnehmen |
-| `räume auf` | sortiere, ordne, clean | Aufräumen/Sortieren |
-| `hilfe` | help, tipp, hinweis | Tipps bekommen |
-| `inventar` | inv, i, tasche | Inventar anzeigen |
-| `status` | fortschritt, stats | Fortschritt anzeigen |
+| Befehl      | Synonyme                           | Beschreibung               |
+| ----------- | ---------------------------------- | -------------------------- |
+| `schaue`    | schau, guck, untersuche, betrachte | Raum oder Objekt anschauen |
+| `nimm`      | nehme, hole, greife, sammle        | Item aufnehmen             |
+| `räume auf` | sortiere, ordne, clean             | Aufräumen/Sortieren        |
+| `hilfe`     | help, tipp, hinweis                | Tipps bekommen             |
+| `inventar`  | inv, i, tasche                     | Inventar anzeigen          |
+| `status`    | fortschritt, stats                 | Fortschritt anzeigen       |
 
 ### Beispiel-Interaktionen
 
@@ -186,6 +191,7 @@ Du bringst alle Schwerter in die Waffenkammer. Gut gemacht! [+20 OP]
 ### Ordnungs-Punkte (OP)
 
 OP sind die Währung im Spiel. Du sammelst sie durch:
+
 - **Kleine Aktionen:** +5 OP (z.B. ein Item nehmen)
 - **Teilaufgaben:** +10-20 OP (z.B. Kategorie sortiert)
 - **Level abschließen:** +30-50 OP Bonus
@@ -210,43 +216,49 @@ OP sind die Währung im Spiel. Du sammelst sie durch:
 ## 🏰 Level-Übersicht
 
 ### Level 1: Die Eingangshalle (Tutorial)
-**Lernziel:** Aufgaben zerlegen  
-**Schwierigkeit:** Tutorial  
+
+**Lernziel:** Aufgaben zerlegen
+**Schwierigkeit:** Tutorial
 **OP-Ziel:** 100
 
 Große Halle mit Ritterrüstungen, Waffen und Fahnen. Hier lernst du die Grundlagen der Aufgabenteilung.
 
 ### Level 2: Der Thronsaal
-**Lernziel:** Kategorisieren  
-**Schwierigkeit:** Leicht  
+
+**Lernziel:** Kategorisieren
+**Schwierigkeit:** Leicht
 **OP-Ziel:** 150
 
 Thron unter Bergen von Papier begraben. Lerne, Dinge nach Kategorien zu sortieren.
 
 ### Level 3: Die Küche
-**Lernziel:** Prioritäten setzen  
-**Schwierigkeit:** Mittel  
+
+**Lernziel:** Prioritäten setzen
+**Schwierigkeit:** Mittel
 **OP-Ziel:** 200
 
 ⚠️ **ZEITKRITISCH!** Etwas brennt im Ofen - du musst schnell handeln!
 
 ### Level 4: Das Kinderzimmer
-**Lernziel:** Sicherheit zuerst  
-**Schwierigkeit:** Mittel  
+
+**Lernziel:** Sicherheit zuerst
+**Schwierigkeit:** Mittel
 **OP-Ziel:** 250
 
 Sprechender Teddybär braucht Hilfe. Erkenne Gefahren und handle entsprechend.
 
 ### Level 5: Die Bibliothek
-**Lernziel:** Systeme entwickeln  
-**Schwierigkeit:** Schwer  
+
+**Lernziel:** Systeme entwickeln
+**Schwierigkeit:** Schwer
 **OP-Ziel:** 300
 
 Tausende Bücher durcheinander. Entwickle einen Plan, bevor du beginnst!
 
 ### Level 6: Konfusios Labor (Boss)
-**Lernziel:** Alles kombinieren  
-**Schwierigkeit:** Boss  
+
+**Lernziel:** Alles kombinieren
+**Schwierigkeit:** Boss
 **OP-Ziel:** 400
 
 ⏱️ **Timer läuft!** Konfusio stört dich. Kombiniere alle gelernten Fähigkeiten!
@@ -317,6 +329,7 @@ pnpm lint
 #### Game Engine
 
 Die Game Engine basiert auf einer **State Machine**:
+
 - **Nodes:** Story-Punkte im Flowchart
 - **Transitions:** Übergänge zwischen Nodes
 - **Conditions:** Anforderungen für Transitions
@@ -325,6 +338,7 @@ Die Game Engine basiert auf einer **State Machine**:
 #### Command Parser
 
 Der Command Parser versteht natürliche Sprache:
+
 - Flexibles Parsing (z.B. "nimm schwert" = "schwert nehmen")
 - Synonym-Erkennung
 - Fehlerbehandlung mit Vorschlägen
@@ -343,6 +357,7 @@ Der Command Parser versteht natürliche Sprache:
 ### Vercel (Empfohlen)
 
 1. **Repository zu GitHub pushen:**
+
 ```bash
 git add .
 git commit -m "Initial commit"
@@ -350,6 +365,7 @@ git push origin main
 ```
 
 2. **Vercel Projekt erstellen:**
+
    - Gehe zu [vercel.com](https://vercel.com)
    - Importiere das GitHub Repository
    - Vercel erkennt Next.js automatisch
@@ -361,6 +377,7 @@ git push origin main
 ### Environment Variables
 
 Keine erforderlich für MVP. Optional:
+
 ```
 NEXT_PUBLIC_GAME_VERSION=1.0.0
 ```
@@ -472,6 +489,7 @@ Mit ❤️ entwickelt für Kinder mit ADHS und alle, die lernen möchten, Aufgab
 ## 🎯 Roadmap
 
 ### MVP (Aktuell)
+
 - [x] Game Engine Core
 - [x] Command Parser
 - [x] Level 1 (Tutorial)
@@ -480,6 +498,7 @@ Mit ❤️ entwickelt für Kinder mit ADHS und alle, die lernen möchten, Aufgab
 - [ ] Save/Load System
 
 ### Enhancement (Geplant)
+
 - [ ] Level 4-6
 - [ ] Sound Effects
 - [ ] Animations
@@ -487,6 +506,7 @@ Mit ❤️ entwickelt für Kinder mit ADHS und alle, die lernen möchten, Aufgab
 - [ ] Analytics/Tracking
 
 ### Zukunftsideen
+
 - [ ] Multiplayer-Modus
 - [ ] Level-Editor
 - [ ] Mehrsprachigkeit
@@ -494,9 +514,9 @@ Mit ❤️ entwickelt für Kinder mit ADHS und alle, die lernen möchten, Aufgab
 
 ---
 
-**"Große Aufgaben in kleine Schritte zerlegen - das ist der Weg!"**  
+**"Große Aufgaben in kleine Schritte zerlegen - das ist der Weg!"**
 — Fee Struktura 🧚
 
 ---
 
-*Stand: 2024 | Version: 0.1.0 | Status: In Entwicklung*
+_Stand: 2025 | Version: 0.1.0 | Status: In Entwicklung_

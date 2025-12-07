@@ -42,35 +42,43 @@ export default function MainMenu({
 
   return (
     <div
-      className="pixel-panel bg-[var(--retro-bg-panel)] border-[var(--retro-border)] p-8 max-w-2xl mx-auto"
+      className="pixel-panel bg-[var(--retro-bg-panel)] border-[var(--retro-border)] p-8 max-w-5xl mx-auto"
       onKeyDown={handleKeyDown}
       tabIndex={0}
     >
       {/* Game Title */}
-      <div className="text-center mb-12">
+      <div className="mb-12">
         {/* ASCII Art Title */}
-        <div className="font-terminal text-[var(--retro-accent)] text-xs mb-4 leading-tight">
-          <pre className="inline-block">
+        <div className="font-terminal text-[var(--retro-accent)] text-xs mb-4 leading-none overflow-x-auto">
+          <pre
+            className="mx-auto"
+            style={{
+              whiteSpace: "pre",
+              fontFamily: "Courier New, monospace",
+              display: "block",
+              width: "fit-content",
+            }}
+          >
             {`
-███╗   ███╗ █████╗ ████████╗████████╗██╗  ██╗██╗ █████╗ ███████╗    ██╗      ██████╗  ██╗
-████╗ ████║██╔══██╗╚══██╔══╝╚══██╔══╝██║  ██║██║██╔══██╗██╔════╝    ██║     ██╔═══██╗ ██║
-██╔████╔██║███████║   ██║      ██║   ███████║██║███████║███████╗    ██║     ██║   ██║ ██║
-██║╚██╔╝██║██╔══██║   ██║      ██║   ██╔══██║██║██╔══██║╚════██║    ██║     ██║   ██║ ██║
-██║ ╚═╝ ██║██║  ██║   ██║      ██║   ██║  ██║██║██║  ██║███████║    ███████╗╚██████╔╝ ███████╗
-╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝    ╚══════╝ ╚═════╝  ╚══════╝
+███╗   ███╗ █████╗ ████████╗████████╗██╗  ██╗██╗ █████╗ ███████╗    ██████╗  ██████╗ ████████╗    ██╗      ██████╗  ██╗
+████╗ ████║██╔══██╗╚══██╔══╝╚══██╔══╝██║  ██║██║██╔══██╗██╔════╝    ██╔══██╗██╔═══██╗╚══██╔══╝    ██║     ██╔═══██╗ ██║
+██╔████╔██║███████║   ██║      ██║   ███████║██║███████║███████╗    ██║  ██║██║   ██║   ██║       ██║     ██║   ██║ ██║
+██║╚██╔╝██║██╔══██║   ██║      ██║   ██╔══██║██║██╔══██║╚════██║    ██║  ██║██║   ██║   ██║       ██║     ██║   ██║ ██║
+██║ ╚═╝ ██║██║  ██║   ██║      ██║   ██║  ██║██║██║  ██║███████║    ██████╔╝╚██████╔╝   ██║       ███████╗╚██████╔╝ ███████╗
+╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝    ╚═════╝  ╚═════╝    ╚═╝       ╚══════╝ ╚═════╝  ╚══════╝
 `}
           </pre>
         </div>
 
-        <div className="font-pixel text-[var(--retro-text-main)] text-lg mb-2">
+        <div className="font-pixel text-[var(--retro-text-main)] text-lg mb-2 text-center">
           CHAOS QUEST
         </div>
 
-        <div className="font-terminal text-[var(--retro-text-dim)] text-sm">
+        <div className="font-terminal text-[var(--retro-text-dim)] text-sm text-center">
           Eine 8-Bit Abenteuer-Reise
         </div>
 
-        <div className="font-terminal text-[var(--retro-success)] text-xs mt-4">
+        <div className="font-terminal text-[var(--retro-success)] text-xs mt-4 text-center">
           Lerne, große Aufgaben zu meistern!
         </div>
       </div>
