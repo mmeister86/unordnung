@@ -27,7 +27,11 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased bg-(--retro-bg-dark) text-(--retro-text-main)`}
             >
-                <script defer src="https://umami.matthias.lol/script.js" data-website-id="8ebc5d9d-84f0-4ab9-a131-436c28a5047e"></script>
+                <script
+    src="https://rybbit.matthias.lol/api/script.js"
+    data-site-id="eefb02578a74"
+    defer
+></script>
                 {children}
             </body>
         </html>
